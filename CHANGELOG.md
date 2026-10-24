@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- 仓库首页统一使用中文 README，移除独立的英文版及语言切换入口。
+
 ## 0.4.0 — first public release
 
 - Native DSH literature page, local managed PDF storage and recoverable migration.

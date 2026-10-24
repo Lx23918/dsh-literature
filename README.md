@@ -1,59 +1,57 @@
-# DSH Literature
+# DSH 文献库
 
 [![CI](https://github.com/Lx23918/dsh-literature/actions/workflows/ci.yml/badge.svg)](https://github.com/Lx23918/dsh-literature/actions/workflows/ci.yml)
 
-English | [简体中文](README.zh.md)
+在 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 中管理、检索和阅读本地论文。复用 DSH 已有的模型、原生流式会话及 PDF 预览，将回答中的核验引用直接定位到论文原句。
 
-A native literature manager for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness). Organize local PDFs, search their contents, discuss selected papers using your existing DSH model, and follow verified quotations back to the source page.
+日常使用只需要 DSH，无需另行运行 Zotero 或模型 API 代理。插件界面及本说明均为中文。
 
-No separate Zotero installation or model API proxy is required. The interface is currently in Chinese; both English and Chinese documentation are provided.
+## 功能
 
-## What it does
-
-| Task | Features |
+| 场景 | 已实现 |
 | --- | --- |
-| Build a library | Copy PDFs into managed storage; import folders as nested collections; reuse identical PDFs by content hash. |
-| Identify papers | Extract local PDF metadata; optionally match DOI/title/arXiv records through Crossref and arXiv. |
-| Find evidence | Local SQLite FTS5 keyword search, physical PDF page numbers, and word coordinates. |
-| Read with AI | Create a research session restricted to the papers you selected, using DSH's native model picker, streaming responses and history. |
-| Check quotations | Match a quotation against the local PDF, record its content fingerprint, and open the matching page with highlights. |
-| Write references | Stable/pinned citation keys, BibTeX/BibLaTeX/CSL JSON export, LaTeX/Pandoc quick copy, and auto-updating `.bib` files. |
-| Organize reading | Collections, tags, journal labels, notes, recoverable trash and optional easyScholar journal metrics. |
+| 建立文库 | 复制 PDF 入库、按文件夹层级导入、按内容哈希去重。 |
+| 补全文献信息 | 从 PDF 提取信息；可选通过 Crossref、arXiv 匹配标题、作者、年份、DOI 和摘要。 |
+| 查找原文依据 | 本地 SQLite FTS5 关键词检索、PDF 物理页码、词级文字坐标。 |
+| AI 阅读 | 以选中文献为范围创建原生研究会话，使用 DSH 已配置的模型、流式回复和历史记录。 |
+| 核验引用 | 匹配本地 PDF 原句、记录内容指纹、点击跳页并高亮；PDF 改变后要求重新核验。 |
+| 论文写作 | 固定/编辑引用键、BibTeX/BibLaTeX/CSL JSON 导出、LaTeX/Pandoc 快速复制、自动更新 `.bib`。 |
+| 整理资料 | 嵌套分类、标签、期刊标记、笔记、可恢复回收站，以及可选 easyScholar 期刊指标。 |
 
-Quotation verification confirms that text exists in the cited PDF. Assessing whether it supports a conclusion still requires reading the surrounding context.
+摘句核验确认的是“这句话存在于这份 PDF”。它是否支持某个结论，仍需阅读限定条件和上下文。
 
 <details>
-<summary>Evidence-reader demo (synthetic paper)</summary>
+<summary>原文定位演示（合成文献）</summary>
 
-<img src="docs/images/evidence-reader.png" width="540" alt="A synthetic quotation highlighted on PDF page 2 in the DSH evidence reader">
+<img src="docs/images/evidence-reader.png" width="540" alt="DSH 原文定位页签中，合成文献第2页的摘句被高亮">
 
-This sample uses a generated test document, no private account/paper and no model request.
+演示使用生成的测试文献，没有私人账号、真实论文或模型请求。
 </details>
 
-## Requirements
+## 环境要求
 
-- **DSH 0.2.1-rc.2**: the version this release was developed and checked against. Other versions are not covered by that compatibility claim.
-- **Node.js 24.13 or newer**, normally supplied by DSH.
-- **Python 3.10+** with the PDF dependency in `requirements.txt`:
+- **DSH 0.2.1-rc.2**：当前版本的开发与验证基线，其他宿主版本不在该兼容性声明范围内。
+- **Node.js 24.13 或更新版本**：通常由 DSH 自带。
+- **Python 3.10+**，并安装 `requirements.txt` 中的 PDF 依赖：
 
   ```sh
   python -m pip install -r requirements.txt
   ```
 
-On systems where Python is named `python3`, use `python3` instead. The executable must be available to the process that launches DSH. See [Python configuration](#python-configuration) when it is not on that process's PATH.
+如果系统命令是 `python3`，请将上面的 `python` 换成 `python3`。解释器须能被启动 DSH 的进程找到；不在其 PATH 中时，见下方配置。
 
-## Install a release archive
+## 安装发布包
 
-Install the PDF dependency into the Python interpreter used by DSH, then install the checked release package:
+先为 DSH 使用的 Python 安装 PDF 依赖，再安装已检查的发布包：
 
 ```sh
 python -m pip install "PyMuPDF==1.26.5"
 dsh plugin --profile desktop add https://github.com/Lx23918/dsh-literature/releases/download/v0.4.0/dsh-literature-0.4.0.tgz
 ```
 
-Restart DSH after installation. Use your actual profile name in place of `desktop`.
+安装后重启 DSH；如果使用其他 profile，将 `desktop` 换成对应名称。
 
-## Install from source
+## 从源码安装
 
 ```sh
 git clone https://github.com/Lx23918/dsh-literature.git
@@ -64,13 +62,13 @@ npm run build
 dsh plugin --profile desktop add .
 ```
 
-Use the profile you actually run in place of `desktop`, if different. Restart DSH after installation. A **文献库** (Literature) entry appears in the sidebar. The source directory remains the installed plugin location; keep it available.
+如果你使用其他 profile，将 `desktop` 换成对应名称。安装后重启 DSH，左侧出现 **文献库**。源码目录会作为插件安装位置，请保留该目录。
 
-Release archives are available from [GitHub Releases](https://github.com/Lx23918/dsh-literature/releases). This project does not publish a separate model subscription service, and installation does not log in to any model provider.
+打包文件见 [GitHub Releases](https://github.com/Lx23918/dsh-literature/releases)。插件不提供独立的模型订阅服务，安装也不会自动登录模型账号。
 
-### Python configuration
+### 配置 Python
 
-The plugin uses `DSH_LITERATURE_PYTHON` when set; otherwise it uses `python` on Windows and `python3` elsewhere. You can also set the interpreter in your profile's `cordis.patch.yml`:
+优先使用环境变量 `DSH_LITERATURE_PYTHON`；未设置时，Windows 默认用 `python`，其他系统默认用 `python3`。也可以在所用 profile 的 `cordis.patch.yml` 中配置：
 
 ```yaml
 - id: literature-library-service
@@ -78,55 +76,55 @@ The plugin uses `DSH_LITERATURE_PYTHON` when set; otherwise it uses `python` on 
     python: python3
 ```
 
-Replace the value with your interpreter's absolute path if necessary. Preserve any other options already present in this entry. Configure the environment for the DSH process, rather than only for an unrelated terminal window.
+必要时填写解释器完整路径，并保留该条目已有的其他配置。环境变量需要对 DSH 的启动进程生效，仅在另一个终端窗口设置不会影响已经运行的桌面端。
 
-## Start reading
+## 开始使用
 
-1. Open **文献库** and choose **导入 PDF** or **导入文件夹**.
-2. Select papers and choose **索引所选** to build text/coordinate indexes. Indexing runs locally and does not call a model.
-3. Choose **与所选文献对话**, select a model already configured in DSH, and ask your question.
-4. For evidence, ask the model to provide the paper, original quotation, physical page number and a verified citation. Click the citation to open **原文定位** in the right sidebar.
+1. 打开 **文献库**，点击 **导入 PDF** 或 **导入文件夹**。
+2. 选中文献，点击 **索引所选**，在本地建立文字和坐标索引；这一步不调用模型。
+3. 点击 **与所选文献对话**，选择 DSH 已配置的模型并提问。
+4. 询问依据时，要求列出论文、原文摘句、PDF 物理页码及核验引用；点击引用可在右侧 **原文定位** 页签查看高亮。
 
-For example:
+示例提问：
 
-> Compare the evidence for this conclusion across the selected papers. Quote the relevant original sentences, give physical PDF page numbers, and verify each quotation before citing it.
+> 请比较所选论文对这个结论的支持程度。逐项给出论文、相关原句和 PDF 物理页码，调用摘句核验工具后再给出可定位引用。
 
-The model must actually call the research tools. A text-only answer without a verified citation has not passed the quotation check.
+模型需要实际调用文献工具。只有文字回答、没有核验引用的内容，不代表已经通过原文核验。
 
-### References and folder import
+### 引用与文件夹导入
 
-- **引用与导出** exports selected papers, or the current list when none are selected. Exporting or copying pins citation keys; later metadata enrichment will not silently change them. Edit keys under **编辑属性**.
-- Auto-export tracks the whole library or a collection including its descendants. It writes to `exports/` inside the library. Stopping an auto-export retains the file.
-- **导入文件夹** is a one-time recursive PDF import, not a watched-folder sync. Folder names become collections. Repeated content is reused and added to the appropriate collections. Source files are not moved.
-- Supported limits are 50 MiB per PDF, 5,000 pages per indexed PDF and 10,000 PDFs per folder import. Non-PDF files are skipped.
+- **引用与导出**：有勾选时导出所选文献，否则导出当前列表。导出或复制后固定引用键，补全元数据时不再自动改变；可在 **编辑属性** 中自行修改。
+- **自动更新 `.bib`**：按整个文库或当前分类及子分类生成，写入文库内 `exports/`。停止自动更新会保留文件。
+- **导入文件夹**：一次性递归导入 PDF，目录成为分类；同内容文件复用已有文献并补充分类，原文件不移动。不监听源文件夹后续变化。
+- 当前限制：单 PDF 50 MiB、单 PDF 索引 5,000 页、每批文件夹导入最多 10,000 份 PDF；非 PDF 文件跳过。
 
-## Storage and privacy
+## 存储与隐私
 
-PDFs are **copied**, not linked. The library contains `library.sqlite`, `pdfs/`, notes/index data and optional `exports/` files. The initial default is `$DSH_HOME/literature-library`; a physical-profile pointer then keeps the chosen location stable across launches.
+PDF **复制入库，不采用软链接**。文库包含 `library.sqlite`、`pdfs/`、笔记/索引及可选 `exports/`。首次默认位置为 `$DSH_HOME/literature-library`，之后由实际 profile 中的指针固定目录，避免启动方式改变导致文库位置变化。
 
-Change the directory in **数据源与存储 → 文库目录 → 迁移并切换**. Migration copies the data, checks PDF hashes and database integrity, then switches locations. The old directory is retained as a recovery copy. Back up the complete library, preferably after closing DSH.
+在 **数据源与存储 → 文库目录 → 迁移并切换** 修改位置。程序复制数据、校验 PDF 哈希和数据库完整性后切换，旧目录保留为恢复副本。备份应包含完整文库，建议先关闭 DSH。
 
-| Operation | What leaves the machine |
+| 操作 | 会向外发送什么 |
 | --- | --- |
-| Import, indexing, quotation matching, page rendering, bibliography export | Nothing from these operations. |
-| AI research | Metadata and passages returned by tools enter the context of the model/provider you selected in DSH. |
-| Crossref/arXiv, when enabled | Titles and identifiers used for metadata lookup; no PDF binary/full-text upload. |
-| easyScholar, when enabled | Journal name and your easyScholar key, sent to its HTTPS API. |
+| 导入、索引、摘句匹配、页面渲染、参考文献导出 | 这些操作均在本地完成。 |
+| AI 阅读 | 工具返回的元数据和原文片段进入你在 DSH 中选择的模型/提供方的上下文。 |
+| Crossref、arXiv（启用后） | 用于匹配的标题、标识符；不上传 PDF 二进制或全文。 |
+| easyScholar（启用后） | 期刊名和你填写的密钥，发送至其 HTTPS API。 |
 
-External metadata/rank services are disabled by default until enabled in settings. Store the easyScholar key through the settings form; the plugin uses DSH's credential store and does not echo the saved key to the client. No key is included in this repository.
+外部元数据及期刊服务默认关闭，按需在设置中启用。easyScholar 密钥通过设置表单保存到 DSH 原生凭据库，已保存密钥不回显到客户端；本仓库不含任何密钥。
 
-The plugin adds an independent `literature` preset. Its six tools are unavailable to ordinary chats and check the session's selected-paper scope again at execution time. It does not replace your default model, global prompt, normal chat UI or other plugins' settings.
+插件追加独立 `literature` 预设，六个研究工具只在该模式可见，执行时再次检查本会话选中文献范围。不会替换默认模型、全局提示词、普通聊天界面或其他插件设置。
 
-## Current scope
+## 当前边界
 
-- Search is keyword based, not vector/semantic search.
-- OCR, Word citation integration, CSL bibliography formatting, browser connectors and cloud sync are not implemented.
-- The evidence reader renders the current PDF page with coordinate overlays; it does not alter the PDF. DSH's ordinary PDF preview remains available.
-- Complex layouts may produce imperfect reading order. Check context when interpreting extracted text.
-- This implements common citation-key/bibliography and folder-import workflows, not every feature of Better BibTeX or Zotero.
-- Model access, subscription eligibility, quotas and provider availability are managed by DSH and the provider you choose.
+- 目前是关键词检索，没有向量/语义检索。
+- 尚无 OCR、Word 引用集成、CSL 参考文献排版、浏览器 Connector 和云同步。
+- 原文定位按需渲染当前 PDF 页并叠加坐标高亮，不修改 PDF；DSH 原生 PDF 预览继续保留。
+- 复杂排版可能导致提取顺序不理想，判断结论时请核对上下文。
+- 已实现常用引用键、参考文献导出和文件夹导入流程，不等同于完整 Better BibTeX 或 Zotero。
+- 模型访问资格、订阅额度及提供方可用性由 DSH 和所选提供方管理。
 
-## Development
+## 开发与检查
 
 ```sh
 python -m pip install -r requirements.txt
@@ -135,16 +133,16 @@ npm run check
 npm run check:package
 ```
 
-`assets/client-features.js` and `assets/library.css` are inlined by `scripts/build.mjs` into the native ModuleLoader client. Runtime modules and this build source are committed. Tests use synthetic PDFs and mocked metadata services, not private papers, accounts or paid model requests. CI runs on Linux and Windows.
+构建脚本把 `assets/client-features.js` 和 `assets/library.css` 内联进原生 ModuleLoader 客户端。仓库保留运行代码及对应构建源码。测试使用合成 PDF 和模拟元数据接口，不使用私人论文、账号或付费模型请求；CI 覆盖 Linux 和 Windows。
 
-Before committing, run `npm run check:staged` after staging. It scans staged blobs rather than only the working files. `check:package` inspects the npm package allowlist and scans every packaged text file. Review changes manually as well: automated checks are a guard, not a substitute for reviewing sensitive material.
+暂存后运行 `npm run check:staged`，它扫描的是暂存区实际内容，而非仅检查工作文件。`check:package` 检查打包白名单并扫描发布文件；人工复查同样必要。
 
-See [architecture](docs/architecture.md), [contributing](CONTRIBUTING.md), [publishing](docs/publishing.md) and [security](SECURITY.md).
+另见[架构说明](docs/architecture.md)、[贡献指南](CONTRIBUTING.md)、[发布说明](docs/publishing.md)和[安全说明](SECURITY.md)。
 
-## License and acknowledgements
+## 许可与致谢
 
-Copyright © 2026 Lx23918 and contributors. Licensed under **AGPL-3.0-or-later**, without warranty. Commercial use is permitted under the license; no non-commercial restriction is added. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
+Copyright © 2026 Lx23918 and contributors。项目采用 **AGPL-3.0-or-later**，按许可提供且不作担保。允许依规商用，没有额外“禁止商用”限制；见 [LICENSE](LICENSE) 和 [NOTICE](NOTICE)。
 
-PyMuPDF is installed separately and retains its upstream AGPL/commercial licensing terms. This repository and its package do not bundle PyMuPDF/MuPDF binaries. Upstream source/license references are provided in `NOTICE`.
+PyMuPDF 单独安装，保留其上游 AGPL／商业许可。本仓库及插件包不捆绑 PyMuPDF/MuPDF 二进制，`NOTICE` 提供上游源码和许可入口。
 
-Built using DSH's plugin and slot APIs. Workflow references: [Better BibTeX](https://retorque.re/zotero-better-bibtex/) and [Folder Import for Zotero](https://github.com/retorquere/zotero-folder-import). This project is independent of those projects and is not an official DeepSeek or Zotero plugin.
+基于 DSH 插件及槽位 API 开发。流程参考 [Better BibTeX](https://retorque.re/zotero-better-bibtex/) 和 [Folder Import for Zotero](https://github.com/retorquere/zotero-folder-import)。本项目独立维护，不是 DeepSeek 或 Zotero 官方插件。

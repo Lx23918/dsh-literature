@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';import path from 'node:path';import {fileURLTo
 import {createHash} from 'node:crypto';
 export const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const excluded=new Set(['.git','node_modules','dist','runtime','dev','evidence','coverage','tmp','.cache','.venv','venv','__pycache__']);
-const roots=new Set(['.gitignore','.gitattributes','package.json','package-lock.json','README.md','README.zh.md','LICENSE','NOTICE','SECURITY.md','CONTRIBUTING.md','CHANGELOG.md','requirements.txt','cordis.patch.yml']);
+const roots=new Set(['.gitignore','.gitattributes','package.json','package-lock.json','README.md','LICENSE','NOTICE','SECURITY.md','CONTRIBUTING.md','CHANGELOG.md','requirements.txt','cordis.patch.yml']);
 const directories=['lib/','assets/','tests/','scripts/','docs/','.github/'];
 export function scanText(text){
  const patterns=[

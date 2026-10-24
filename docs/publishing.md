@@ -7,7 +7,7 @@
 5. Push source, wait for Linux and Windows CI, then create a matching version tag and GitHub Release. Publish the checked npm archive and its SHA-256 checksum. Link to the same tag's source archive.
 6. Do not publish to npm or submit a marketplace entry as an accidental side effect of the build. Those are separate release actions.
 
-The npm package ships only runtime modules/assets, the bundle patch, requirements, both READMEs, LICENSE and NOTICE. It does not bundle the Python interpreter, PyMuPDF/MuPDF binaries, host code, private diagnostics or development libraries.
+The npm package ships only runtime modules/assets, the bundle patch, requirements, the Chinese README, LICENSE and NOTICE. It does not bundle the Python interpreter, PyMuPDF/MuPDF binaries, host code, private diagnostics or development libraries.
 
 For future marketplace submission, see the current [Awesome DSH contribution requirements](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin/blob/main/contributing.md). The package must expose `dsh.bundle` and a real additive patch. Listing is not automatic; do not display a listing badge before acceptance.
 
