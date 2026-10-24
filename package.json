@@ -1,0 +1,85 @@
+{
+  "name": "dsh-literature",
+  "version": "0.4.0",
+  "type": "module",
+  "description": "Native literature management for DeepSeek Harness: local PDFs, verified citations, full-text search and BibTeX export.",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./research": "./lib/research.js",
+    "./client": "./lib/client.js",
+    "./typert": "./lib/typert.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "assets",
+    "cordis.patch.yml",
+    "README.md",
+    "README.zh.md",
+    "LICENSE",
+    "NOTICE",
+    "requirements.txt"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-ui-sidebar",
+        "@deepseek-ai/dsh-client-ui-workspace",
+        "@deepseek-ai/dsh-client-ui-sidebar-right"
+      ]
+    }
+  },
+  "engines": {
+    "node": ">=24.13.0",
+    "dsh": "0.2.1-rc.2"
+  },
+  "dependencies": {
+    "zod": "4.4.3"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "~4.0.5",
+    "@deepseek-ai/dsh-tools": "0.2.1-rc.2"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "check:public": "node scripts/check-public.mjs",
+    "check": "npm run build && npm test && npm run check:public",
+    "prepare": "npm run build",
+    "prepack": "npm run build && npm run check:public",
+    "check:package": "node scripts/check-package.mjs",
+    "check:staged": "node scripts/check-public.mjs --staged"
+  },
+  "devDependencies": {
+    "playwright": "^1.64.1"
+  },
+  "license": "AGPL-3.0-or-later",
+  "author": "Lx23918",
+  "homepage": "https://github.com/Lx23918/dsh-literature#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lx23918/dsh-literature.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Lx23918/dsh-literature/issues"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh-plugin",
+    "literature",
+    "pdf",
+    "citation",
+    "bibtex",
+    "biblatex"
+  ],
+  "icon": "assets/icon.svg",
+  "publishConfig": {
+    "access": "public"
+  }
+}

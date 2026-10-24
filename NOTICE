@@ -1,0 +1,26 @@
+DSH Literature
+Copyright (c) 2026 Lx23918 and contributors
+Project license: AGPL-3.0-or-later; see LICENSE.
+
+Third-party components retain their respective licenses:
+
+* PyMuPDF 1.26.5 / MuPDF: external PDF extraction and rendering dependency.
+  Available upstream under AGPL and commercial terms. No binary distribution
+  of PyMuPDF or MuPDF is included in this repository or the plugin archive.
+  Source: https://github.com/pymupdf/PyMuPDF
+  License: https://pymupdf.readthedocs.io/en/latest/about.html#license-and-copyright
+
+* Zod: runtime schema dependency, MIT.
+  Source/license: https://github.com/colinhacks/zod
+  Installed separately by the JavaScript package manager.
+
+* DeepSeek Harness / Cordis APIs and shared React runtime: supplied by the host,
+  not vendored into this plugin.
+  Source/license: https://github.com/deepseek-ai/deepseek-harness
+
+* Playwright: development-only browser testing dependency, Apache-2.0.
+  Source/license: https://github.com/microsoft/playwright
+
+Workflow references, with no claim of affiliation:
+https://retorque.re/zotero-better-bibtex/
+https://github.com/retorquere/zotero-folder-import

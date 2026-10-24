@@ -1,0 +1,2 @@
+# PDF extraction/rendering dependency; installed separately, not bundled.
+PyMuPDF==1.26.5

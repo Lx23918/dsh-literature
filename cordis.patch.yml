@@ -1,0 +1,13 @@
+# Additive only. Never replace the default preset, model, tools or prompt.
+- insert:
+    - id: literature-library-service
+      name: dsh-literature
+    - id: literature-research-preset
+      name: '@deepseek-ai/dsh-agent-preset'
+      config:
+        id: literature
+        name: 文献研究
+        description: 仅此模式提供文献库检索、PDF 原文读取与文献笔记工具
+        order: 95
+        plugins:
+          - name: dsh-literature/research

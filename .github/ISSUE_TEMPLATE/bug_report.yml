@@ -1,0 +1,25 @@
+name: Bug report / 问题反馈
+description: Report a reproducible problem without private data.
+body:
+  - type: markdown
+    attributes:
+      value: Do not include API keys, OAuth files, private PDFs, library databases, personal paths or unredacted logs. 请使用合成文献复现，不要上传密钥或私人文库。
+  - type: input
+    id: versions
+    attributes:
+      label: Versions / 版本
+      description: Plugin, DSH, operating system and Python versions.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction / 复现步骤
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Expected and actual result / 预期与实际结果
+    validations:
+      required: true
