@@ -8,7 +8,7 @@ import path from 'node:path';
 import {spawnSync} from 'node:child_process';
 import {LibraryStore} from '../lib/store.js';
 const python=process.env.DSH_LITERATURE_PYTHON||(process.platform==='win32'?'python':'python3');
-const root=await fs.mkdtemp(path.join(os.tmpdir(),'dsh-literature-test-'));
+const root=await fs.realpath(await fs.mkdtemp(path.join(os.tmpdir(),'dsh-literature-test-')));
 const store=await new LibraryStore(root,{python}).open();
 let paper,attachment;
 test('nested collections reject cycles and retain journal labels across papers',()=>{

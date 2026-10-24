@@ -2,7 +2,7 @@
 // Copyright (c) 2026 Lx23918 and contributors
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs/promises';import os from 'node:os';import path from 'node:path';import {spawnSync} from 'node:child_process';
 import {LibraryStore} from '../lib/store.js';import {normalizedText} from '../lib/evidence.js';import {StorageMigration} from '../lib/storage.js';
-const root=await fs.mkdtemp(path.join(os.tmpdir(),'dsh-evidence-')),store=await new LibraryStore(path.join(root,'library')).open();let paper,attachment,citation;
+const root=await fs.realpath(await fs.mkdtemp(path.join(os.tmpdir(),'dsh-evidence-'))),store=await new LibraryStore(path.join(root,'library')).open();let paper,attachment,citation;
 test('coordinate extraction retains physical pages and duplicate quote occurrences',async()=>{const file=path.join(root,'fixture.pdf');const r=spawnSync(store.python,['-c',`import fitz,sys
 d=fitz.open();p=d.new_page(width=420,height=600);p.insert_text((40,60),'Study overview')
 p=d.new_page(width=420,height=600);p.insert_text((40,60),'Participant C was held out. Accuracy 0.75.');p.insert_text((40,100),'Repeated evidence sentence.');p.insert_text((40,140),'Repeated evidence sentence.');p.insert_text((40,180),'Cross-\u005cnvalidation was applied.')
