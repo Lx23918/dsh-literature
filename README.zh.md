@@ -42,6 +42,17 @@
 
 如果系统命令是 `python3`，请将上面的 `python` 换成 `python3`。解释器须能被启动 DSH 的进程找到；不在其 PATH 中时，见下方配置。
 
+## 安装发布包
+
+先为 DSH 使用的 Python 安装 PDF 依赖，再安装已检查的发布包：
+
+```sh
+python -m pip install "PyMuPDF==1.26.5"
+dsh plugin --profile desktop add https://github.com/Lx23918/dsh-literature/releases/download/v0.4.0/dsh-literature-0.4.0.tgz
+```
+
+安装后重启 DSH；如果使用其他 profile，将 `desktop` 换成对应名称。
+
 ## 从源码安装
 
 ```sh

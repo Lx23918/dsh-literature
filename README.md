@@ -42,6 +42,17 @@ This sample uses a generated test document, no private account/paper and no mode
 
 On systems where Python is named `python3`, use `python3` instead. The executable must be available to the process that launches DSH. See [Python configuration](#python-configuration) when it is not on that process's PATH.
 
+## Install a release archive
+
+Install the PDF dependency into the Python interpreter used by DSH, then install the checked release package:
+
+```sh
+python -m pip install "PyMuPDF==1.26.5"
+dsh plugin --profile desktop add https://github.com/Lx23918/dsh-literature/releases/download/v0.4.0/dsh-literature-0.4.0.tgz
+```
+
+Restart DSH after installation. Use your actual profile name in place of `desktop`.
+
 ## Install from source
 
 ```sh
