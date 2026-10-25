@@ -14,6 +14,14 @@ Third-party components retain their respective licenses:
   Source/license: https://github.com/colinhacks/zod
   Installed separately by the JavaScript package manager.
 
+* js-yaml: YAML parser dependency, MIT.
+  Source/license: https://github.com/nodeca/js-yaml
+  Installed separately by the JavaScript package manager.
+
+* Cordis include / loader: native preset composition and expression schema, MIT.
+  Source/license: https://github.com/deepseek-ai/deepseek-harness/tree/master/vendor
+  Installed separately by the JavaScript package manager.
+
 * DeepSeek Harness / Cordis APIs and shared React runtime: supplied by the host,
   not vendored into this plugin.
   Source/license: https://github.com/deepseek-ai/deepseek-harness

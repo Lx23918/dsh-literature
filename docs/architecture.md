@@ -15,6 +15,8 @@ flowchart LR
 
 `cordis.patch.yml` adds a library service and a separate `literature` preset. `lib/index.js` exposes the plugin's own typed RPC dispatcher; `lib/research.js` registers tools only in that preset. Ordinary chat does not acquire those tools or their prompt.
 
+`lib/preset.js` reads the ordinary default preset through the host registry's composition document API, decodes it with the host's entry-list schema, and registers the complete composition plus the literature tools. This retains nested groups, native tool configuration and deferred expressions; it does not maintain a reduced tool list or alter the source preset. `basePreset` can select another native preset. The inherited definition refreshes when this plugin loads, so restart after changing the base configuration. File, shell and network operations retain the native implementation and policies.
+
 `lib/client.js` is a native DSH ModuleLoader bundle using React slots and host theme tokens. It uses DSH's existing sessions, model picker and streaming renderer. The evidence reader is a separate right-sidebar tab; default PDF preview remains available. API changes in other host versions require a compatibility review.
 
 ## Evidence
