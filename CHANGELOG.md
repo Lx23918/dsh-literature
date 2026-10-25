@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- 修复已知问题。
 - 仓库首页统一使用中文 README，移除独立的英文版及语言切换入口。
 
 ## 0.4.0 — first public release
